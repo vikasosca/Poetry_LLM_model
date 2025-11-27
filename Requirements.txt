@@ -1,0 +1,38 @@
+# Core ML Framework
+torch==2.1.2
+torchvision==0.16.2  # Not strictly needed but often bundled with PyTorch
+
+# Tokenization
+tiktoken==0.5.2
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0.post1
+
+# Data Processing
+numpy==1.24.4
+
+# API Validation
+pydantic==2.5.3
+
+# System Utilities
+psutil==5.9.7
+
+# Async Support (included with uvicorn[standard] but explicit for clarity)
+aiofiles==23.2.1
+httptools==0.6.1
+watchfiles==0.20.0
+
+# Optional: For rate limiting in production (uncomment if using)
+# slowapi==0.1.6
+
+# Development/Testing Dependencies (uncomment for development)
+# matplotlib==3.8.2
+# pytest==7.4.4
+# black==23.12.1
+# flake8==6.1.0
+
+# Compatibility Notes:
+# - Python 3.8+ required (PyTorch 2.1+ compatibility)
+# - Windows/Linux/macOS supported
+# - CPU-only installation (no CUDA dependencies)
