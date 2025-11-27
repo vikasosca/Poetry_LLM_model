@@ -1,0 +1,50 @@
+import torch
+from my_tokenizer import CharTokenizer
+
+with open('C:\\Users\\Admin\\Desktop\\AI\\python\\LLM\\input.txt','r') as f:
+    text = f.read()
+    print(f"Length: {len(text)}")
+    print(f'first 50 char: {text[:10]}')
+    print(f'Last 50 char: {text[-10:]}')
+
+    print(" Unique Characters: ", chars := sorted(list(set(text))))  
+    stoi = ''.join(chars)
+   # print ("Vocabulry: ",''.join(chars))
+   # print(f" Vocab size: {len(chars)} ")
+    
+    for i,ch in enumerate(stoi):
+        #print(i,ch)
+        pass
+
+with  open('C:\\Users\\Admin\\Desktop\\AI\\python\\LLM\\input.txt', encoding='utf-8') as file:
+    text = file.read()
+
+tokenizer = CharTokenizer(text)
+''' test encode and decode'''
+prompt =  'The woods are lovely dark and deep!!'
+enco = tokenizer.encode(prompt)
+deco = tokenizer.decode(enco)
+data = torch.tensor(tokenizer.encode(text),dtype=torch.long)
+#Test / Train split
+n = int(0.9 * len(data))
+print(f"dataset length: {len(data)}, {n}")
+train_data = data[:n]
+test_data = data [n:] 
+print(f"Train tokens: {len(train_data)}, Test tokens: {len(test_data)}")
+
+def get_batch(split, batch_size=4, block_size=8):
+    data = train_data if split =='Train' else test_data
+    ix = torch.randint(len(data) - block_size, (batch_size,))
+    x = torch.stack([data[i:i+block_size] for i in ix])
+    y = torch.stack([data[i+1:i+1+block_size] for i in ix])
+    return x,y
+
+xb, yb= get_batch('train',batch_size=2,block_size=4)
+print(f"Input: {xb} and Output: {yb}")
+print("Decoded input:", tokenizer.decode(xb[0].tolist()))
+print("Decoded target:", tokenizer.decode(yb[0].tolist()))
+
+'''assert prompt == deco, "Encode/decode mismatch!"
+print("✅ Tokenizer works!")
+'''
+
